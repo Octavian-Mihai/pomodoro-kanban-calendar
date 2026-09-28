@@ -55,8 +55,18 @@
         "mac": {
             "category": "public.app-category.productivity",
             "target": [
-                "zip",
-                "dmg"
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "arm64"
+                    ]
+                },
+                {
+                    "target": "zip",
+                    "arch": [
+                        "arm64"
+                    ]
+                }
             ],
             "hardenedRuntime": true,
             "gatekeeperAssess": false,
@@ -164,7 +174,6 @@
         "native-ext-loader": "^2.3.0",
         "nedb": "^1.8.0",
         "node-gyp": "^9.0.0",
-        "node-sass": "^7.0.0",
         "prettier": "^2.0.2",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
@@ -182,7 +191,6 @@
         "redux": "^4.0.1",
         "redux-devtools-extension": "^2.13.5",
         "redux-thunk": "^2.3.0",
-        "sass-loader": "^8.0.0",
         "shortid": "^2.2.14",
         "source-map-loader": "^0.2.4",
         "spectron": "^16.0.0",
@@ -207,8 +215,7 @@
     },
     "dependencies": {
         "@electron/remote": "^2.0.8",
-        "active-win": "^7.7.2",
-        "node-mac-permissions": "^2.2.0"
+        "active-win": "^7.7.2"
     },
     "resolutions": {
         "node-ipc": "9.1.1"
