@@ -200,16 +200,15 @@ export const List: FC<Props> = React.memo((props: Props) => {
         // Order cards by deadline (soonest first); cards without a deadline stay after
         // those with one, preserving their relative order.
         const hasDueTime = matched.some((id) => cardsState[id]?.dueTime);
-        const sorted = hasDueTime
-            ? [...matched].sort((a, b) => {
-                  const dueA = cardsState[a]?.dueTime;
-                  const dueB = cardsState[b]?.dueTime;
-                  if (dueA == null && dueB == null) return 0;
-                  if (dueA == null) return 1;
-                  if (dueB == null) return -1;
-                  return dueA - dueB;
-              })
-            : matched;
+        const byDueTime = (a: string, b: string) => {
+            const dueA = cardsState[a]?.dueTime;
+            const dueB = cardsState[b]?.dueTime;
+            if (dueA == null && dueB == null) return 0;
+            if (dueA == null) return 1;
+            if (dueB == null) return -1;
+            return dueA - dueB;
+        };
+        const sorted = hasDueTime ? [...matched].sort(byDueTime) : matched;
 
         if (reg == null && !hasDueTime) {
             props.setVisibleCards(props._id, undefined);

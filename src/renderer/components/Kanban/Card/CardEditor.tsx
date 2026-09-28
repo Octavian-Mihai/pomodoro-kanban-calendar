@@ -210,7 +210,7 @@ const _CardInDetail: FC<Props> = React.memo((props: Props) => {
                             <Form.Item label="To Do Before">
                                 {getFieldDecorator('dueTime')(
                                     <DatePicker
-                                        showTime
+                                        showTime={true}
                                         format="YYYY-MM-DD HH:mm"
                                         placeholder={'Deadline'}
                                         style={{ width: '100%' }}

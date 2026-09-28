@@ -127,13 +127,13 @@ export const actions = {
             _id,
             title,
             content,
+            dueTime,
             sessionIds: [],
             spentTimeInHour: {
                 estimated: 0,
                 actual: 0,
             },
             createdTime: now,
-            dueTime,
         } as Card);
     },
 };

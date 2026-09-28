@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import moment, { Moment } from 'moment';
-import { Badge, Calendar, Empty, Tag, Tooltip } from 'antd';
+import { Badge, Calendar, Empty, Icon, List, Radio, Tag, Tooltip } from 'antd';
 import { RootState } from '../../reducers';
 import { KanbanBoardState } from '../Kanban/Board/action';
 import { ListsState } from '../Kanban/type';
@@ -41,6 +41,33 @@ const TaskItem = styled.li`
     }
 `;
 
+const ScrollList = styled.div`
+    max-height: 60vh;
+    overflow-y: auto;
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    padding: 0 16px;
+`;
+
+const TaskRow = styled(List.Item)`
+    cursor: pointer;
+
+    &:hover {
+        background: #fafafa;
+    }
+`;
+
+const TaskRowMain = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+`;
+
+const TaskTitle = styled.span`
+    font-weight: 500;
+`;
+
 const BOARD_COLORS = [
     'magenta',
     'volcano',
@@ -63,6 +90,18 @@ const colorForBoard = (boardId: string) => {
     return BOARD_COLORS[Math.abs(hash) % BOARD_COLORS.length];
 };
 
+const dueColor = (dueTime: number, now: Moment) => {
+    if (dueTime < now.valueOf()) {
+        return 'red';
+    }
+
+    if (dueTime - now.valueOf() < 24 * 60 * 60 * 1000) {
+        return 'orange';
+    }
+
+    return 'blue';
+};
+
 interface TaskEntry {
     cardId: string;
     listId: string;
@@ -80,6 +119,7 @@ interface Props extends KanbanActionTypes, TimerActionTypes {
 
 const _TaskCalendar: FC<Props> = (props: Props) => {
     const { boards, lists, cards } = props;
+    const [view, setView] = useState<'calendar' | 'list'>('calendar');
     const tasks = React.useMemo(() => {
         const entries: TaskEntry[] = [];
         for (const board of Object.values(boards)) {
@@ -175,18 +215,41 @@ const _TaskCalendar: FC<Props> = (props: Props) => {
 
     return (
         <Container>
-            <div style={{ marginBottom: 12 }}>
-                <Badge
-                    status="error"
-                    text={`${overdueCount} overdue`}
-                    style={{ marginRight: 16 }}
-                />
-                <Badge
-                    status="warning"
-                    text={`${todayCount} due today`}
-                    style={{ marginRight: 16 }}
-                />
-                <Badge status="processing" text={`${upcomingCount} upcoming`} />
+            <div
+                style={{
+                    marginBottom: 12,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: 8,
+                }}
+            >
+                <div>
+                    <Badge
+                        status="error"
+                        text={`${overdueCount} overdue`}
+                        style={{ marginRight: 16 }}
+                    />
+                    <Badge
+                        status="warning"
+                        text={`${todayCount} due today`}
+                        style={{ marginRight: 16 }}
+                    />
+                    <Badge status="processing" text={`${upcomingCount} upcoming`} />
+                </div>
+                <Radio.Group
+                    value={view}
+                    onChange={(e) => setView(e.target.value)}
+                    size="small"
+                >
+                    <Radio.Button value="calendar">
+                        <Icon type="calendar" /> Calendar
+                    </Radio.Button>
+                    <Radio.Button value="list">
+                        <Icon type="unordered-list" /> List
+                    </Radio.Button>
+                </Radio.Group>
             </div>
             {tasks.length === 0 ? (
                 <Empty
@@ -194,8 +257,28 @@ const _TaskCalendar: FC<Props> = (props: Props) => {
                         "No tasks with a deadline yet. Set a 'To Do Before' date on a card to see it here."
                     }
                 />
-            ) : (
+            ) : view === 'calendar' ? (
                 <Calendar dateCellRender={dateCellRender} />
+            ) : (
+                <ScrollList>
+                    <List
+                        dataSource={tasks}
+                        renderItem={(task) => (
+                            <TaskRow key={task.cardId} onClick={() => openTask(task)}>
+                                <TaskRowMain>
+                                    <Tag color={colorForBoard(task.boardId)}>
+                                        {task.boardName}
+                                    </Tag>
+                                    <TaskTitle>{task.title}</TaskTitle>
+                                    <Tag color={dueColor(task.dueTime, now)}>
+                                        <Icon type="clock-circle" />{' '}
+                                        {moment(task.dueTime).format('MMM D, YYYY HH:mm')}
+                                    </Tag>
+                                </TaskRowMain>
+                            </TaskRow>
+                        )}
+                    />
+                </ScrollList>
             )}
         </Container>
     );
