@@ -20,10 +20,7 @@
         "pretest:e2e": "npm run build",
         "test:e2e": "jest '(\\/test\\/e2e/).*'",
         "pack": "npm run build && electron-builder --dir",
-        "dist-win": "npm run build && electron-builder --windows -p onTagOrDraft",
         "dist-mac": "npm run build && electron-builder --mac -p onTagOrDraft",
-        "dist-linux": "npm run build && electron-builder --linux -p onTagOrDraft",
-        "dist-all": "npm run build && electron-builder -mwl",
         "postinstall": "electron-builder install-app-deps",
         "style": "styleguidist server",
         "style-pack": "webpack --config webpack.style.js "
@@ -82,13 +79,7 @@
         "files": [
             "./dist/*",
             "./package.json"
-        ],
-        "linux": {
-            "target": "deb"
-        },
-        "win": {
-            "target": "nsis"
-        }
+        ]
     },
     "repository": {
         "type": "git",
