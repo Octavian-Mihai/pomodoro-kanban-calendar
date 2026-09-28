@@ -1,6 +1,6 @@
 {
     "name": "pomodoro-logger",
-    "version": "0.6.3",
+    "version": "0.7.0",
     "description": "Pomodoro Logger -- When a time logger meets Pomodoro and Kanban board",
     "main": "./dist/main.js",
     "scripts": {
@@ -49,8 +49,8 @@
         "appId": "com.github.rem2016.pomodoro-logger",
         "publish": {
             "provider": "github",
-            "owner": "zxch3n",
-            "repo": "PomodoroLogger"
+            "owner": "Octavian-Mihai",
+            "repo": "pomodoro-kanban-calendar"
         },
         "mac": {
             "category": "public.app-category.productivity",
@@ -92,7 +92,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@github.com:zxch3n/PomodoroLogger.git"
+        "url": "git+https://github.com/Octavian-Mihai/pomodoro-kanban-calendar.git"
     },
     "author": {
         "name": "Zixuan Chen",
@@ -100,9 +100,9 @@
     },
     "license": "LGPL-3.0-or-later",
     "bugs": {
-        "url": "https://github.com/zxch3n/PomodoroLogger/issues"
+        "url": "https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/issues"
     },
-    "homepage": "https://github.com/zxch3n/PomodoroLogger",
+    "homepage": "https://github.com/Octavian-Mihai/pomodoro-kanban-calendar",
     "devDependencies": {
         "@babel/core": "^7.4.5",
         "@babel/plugin-proposal-class-properties": "^7.4.4",

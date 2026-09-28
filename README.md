@@ -5,17 +5,11 @@
 
 
 <p align="center">
-  <a href="https://circleci.com/gh/zxch3n/PomodoroLogger">
-    <img src="https://circleci.com/gh/zxch3n/PomodoroLogger.svg?style=svg"/>
+  <a href="https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/releases/latest">
+    <img src="https://img.shields.io/github/v/release/Octavian-Mihai/pomodoro-kanban-calendar" />
   </a>
-  <a href="https://deepscan.io/dashboard#view=project&tid=5098&pid=6887&bid=60495">
-    <img src="https://deepscan.io/api/teams/5098/projects/6887/branches/60495/badge/grade.svg"/>
-  </a>
-  <a href="https://codecov.io/gh/zxch3n/PomodoroLogger">
-    <img src="https://codecov.io/gh/zxch3n/PomodoroLogger/branch/master/graph/badge.svg" />
-  </a>
-  <a href="https://github.com/zxch3n/PomodoroLogger/releases/latest">
-    <img src="https://img.shields.io/github/downloads/zxch3n/PomodoroLogger/total" />
+  <a href="https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/releases/latest">
+    <img src="https://img.shields.io/github/downloads/Octavian-Mihai/pomodoro-kanban-calendar/total" />
   </a>
 </p>
 
@@ -23,10 +17,11 @@
 
 # Pomodoro Logger :clock930:
 
+> This is a fork of [zxch3n/PomodoroLogger](https://github.com/zxch3n/PomodoroLogger) with task deadlines and a
+> cross-board task calendar added on top, and packaged as a native Apple Silicon (arm64) `.dmg`. See
+> [What's new in this fork](#whats-new-in-this-fork) below.
 
 > **Invest your time easily**
-
-[中文README](https://github.com/zxch3n/PomodoroLogger/wiki/中文README)
 
 
 <img align="right" src="https://i.postimg.cc/0j8FJ70x/image.png" height="280"/>
@@ -86,20 +81,40 @@ The lists in Kanban are divided into `Todo`, `In Progress`, and `Done`. Though l
 To make the statistics more accurate, you can keep the cards of the `In Progress` list as few as possible to precisely reflect the tasks you are focusing on.
 
 
+# What's New in This Fork
+
+- **Task deadlines.** Cards now have a "To Do Before" field. Set a deadline when creating or editing a card, and
+  it shows up as a color-coded badge (blue → amber within 24h → red once overdue). Lists automatically reorder
+  by soonest deadline first, with undated cards sinking to the bottom.
+- **Calendar tab.** A new top-level tab aggregates every deadline across all of your Kanban boards. Switch
+  between a month calendar and a scrollable list view, see overdue / due-today / upcoming counts at a glance,
+  and click any task to jump straight to its card.
+- **Native Apple Silicon build.** The macOS `.dmg` is a genuine arm64 build (no Rosetta translation needed on
+  M1/M2/M3/M4 Macs), and a couple of unmaintained native dependencies that didn't support Apple Silicon were
+  removed.
+
+
 # Download
 
-Win10 / macOS / Linux
+macOS (Apple Silicon)
 
-To download, go to [release page](https://github.com/rem2016/PomodoroLogger/releases).
+Go to the [releases page](https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/releases/latest) and
+download the `.dmg`.
+
+> **First launch:** the app isn't notarized by Apple (that requires a paid Apple Developer Program membership),
+> so macOS Gatekeeper will say it "cannot be opened because the developer cannot be verified." Right-click the
+> app in Finder and choose **Open** (or go to **System Settings → Privacy & Security → Open Anyway**) the first
+> time you launch it. This is a one-time step.
+
+For Windows / Linux / Intel Mac builds, see the upstream project:
+[zxch3n/PomodoroLogger releases](https://github.com/zxch3n/PomodoroLogger/releases).
 
 
 # Contribution
 
-I'd love to see you're involved! Read [the Contribution Guide](./.github/CONTRIBUTION.md) for detail.
+Found a bug or have an idea for this fork? [Open an issue here](https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/issues).
 
-- The roadmap is shown on the [issue page](https://github.com/zxch3n/PomodoroLogger/issues)
-- If you find a bug or want a new feature, [create a issue](https://github.com/zxch3n/PomodoroLogger/issues)
-- If you want to start working on an issue, read [the Contribution Guide](./.github/CONTRIBUTION.md) and comment on the issue to let me know
+For the general contribution workflow, see [the Contribution Guide](./.github/CONTRIBUTION.md) from the upstream project.
 
 # Screenshot
 
