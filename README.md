@@ -6,10 +6,10 @@
 
 <p align="center">
   <a href="https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/releases/latest">
-    <img src="https://img.shields.io/github/v/release/Octavian-Mihai/pomodoro-kanban-calendar" />
+    <img src="https://img.shields.io/github/v/release/Octavian-Mihai/pomodoro-kanban-calendar?cacheSeconds=60" />
   </a>
   <a href="https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/releases/latest">
-    <img src="https://img.shields.io/github/downloads/Octavian-Mihai/pomodoro-kanban-calendar/total" />
+    <img src="https://img.shields.io/github/downloads/Octavian-Mihai/pomodoro-kanban-calendar/total?cacheSeconds=60" />
   </a>
 </p>
 
