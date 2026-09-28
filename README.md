@@ -1,8 +1,6 @@
-
 <p align="center">
   <img src="https://i.postimg.cc/hvjXfB94/icon.png" width="360"/>
 </p>
-
 
 <p align="center">
   <a href="https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/releases/latest">
@@ -11,135 +9,159 @@
   <a href="https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/releases/latest">
     <img src="https://img.shields.io/github/downloads/Octavian-Mihai/pomodoro-kanban-calendar/total?cacheSeconds=60" />
   </a>
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/badge/license-GPL--3.0-blue" />
+  </a>
 </p>
 
+<h1 align="center">Pomodoro Logger :clock930:</h1>
+<p align="center"><b>Invest your time easily.</b></p>
 
+> This is a fork of [zxch3n/PomodoroLogger](https://github.com/zxch3n/PomodoroLogger), built for **macOS on
+> Apple Silicon**, with task deadlines and a cross-board task calendar added on top. See
+> [What's New in This Fork](#whats-new-in-this-fork) for details.
 
-# Pomodoro Logger :clock930:
-
-> This is a fork of [zxch3n/PomodoroLogger](https://github.com/zxch3n/PomodoroLogger) with task deadlines and a
-> cross-board task calendar added on top, and packaged as a native Apple Silicon (arm64) `.dmg`. See
-> [What's new in this fork](#whats-new-in-this-fork) below.
-
-> **Invest your time easily**
-
+Pomodoro Logger combines a [Pomodoro timer](https://en.wikipedia.org/wiki/Pomodoro_Technique), a
+[Kanban board](https://en.wikipedia.org/wiki/Kanban_board), and local activity tracking, so you can plan your
+work, focus on it, and see afterward where your time actually went — all without sending any data off your
+machine.
 
 <img align="right" src="https://i.postimg.cc/0j8FJ70x/image.png" height="280"/>
 
-- Use [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique) to manage your time
-- Collect and visualize your desktop working activities, i.e., the names and titles of the using apps, **locally**
-- Use integrated Kanban Board to make your schedule control easier
-- Analyse your efficiency
+- Run focus/rest sessions with the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique)
+- Organize and schedule your tasks on an integrated Kanban board
+- Set deadlines on tasks and see them all on a calendar
+- Track which apps and windows you use during a session, **locally**
+- Get an efficiency score for each session based on how much you got distracted
+
+<br clear="right"/>
+
+## Table of Contents
+
+- [Pomodoro Technique](#pomodoro-technique-tomato)
+- [Kanban Board](#kanban-board)
+- [What's New in This Fork](#whats-new-in-this-fork)
+- [Efficiency Analysis](#efficiency-analysis)
+- [Data & Privacy](#data--privacy-chart_with_upwards_trend)
+- [Download](#download)
+- [Screenshots](#screenshots)
+- [Development](#development)
+- [Contribution](#contribution)
+- [License](#license)
 
 ## Pomodoro Technique :tomato:
 
-The working loop in the Pomodoro Technique is split into a 25-minute focus session and a 5-minute rest session. During a work session, the user focuses on one todo item and should not do anything irrelevant. The Pomodoro Technique can greatly improve the efficiency of work and study and alleviate work fatigue.
+A Pomodoro session is a 25-minute focus block followed by a 5-minute break. During a focus block you work on
+one task and ignore everything else — it's a simple habit that makes a real dent in procrastination and work
+fatigue.
 
-In the Pomodoro Logger, the app will record the names and titles of the apps you use on your PC during the working sessions. The titles of apps contain rich semantic information. For example, the browser title includes the title of the website being viewed, and the IDE often provides the project path or project name.
+While you're focused, Pomodoro Logger quietly records the name and title of whatever app is in the foreground.
+Titles carry a surprising amount of context on their own:
 
 - `Pomodoro Technique - Wikipedia - Google Chrome`
 - `DeepMind (@DeepMindAI) | Twitter - Google Chrome`
-- `pomodoro-logger [C:\code\pomodoro-logger] .\src\renderer\components\src\Application.tsx - WebStorm`
+- `pomodoro-logger [~/code/pomodoro-logger] Application.tsx - WebStorm`
 
+Because each session is linked back to the Kanban card you were working on, you can later see how often you
+were pulled away by email or social apps, and how your time actually split across tasks — a much clearer
+picture of your working hours than a plain timer gives you.
 
-By connecting your todo items with the corresponding recorded Pomodoro sessions, you can analyze how often you are interrupted by email and social software, the time distribution of the application and application title used to complete the task. It will help you have a more comprehensive understanding of your working hours on PC.
+## Kanban Board
 
+Tasks live on a Kanban board with `Todo`, `In Progress`, and `Done` lists (you can add more, but `In Progress`
+and `Done` are required so the app can track and analyze time spent). Give a card an estimated time, and while
+you're focused on it, Pomodoro Logger links your session to it automatically and tallies up the actual time
+spent.
+
+Keeping the `In Progress` list short — ideally just the one thing you're actually doing — makes those
+estimates a lot more meaningful.
+
+## What's New in This Fork
+
+- **Task deadlines.** Cards have a "To Do Before" field. Set a deadline when creating or editing a card and it
+  shows up as a color-coded badge — blue, amber within 24 hours, red once overdue. Cards in a list automatically
+  reorder by soonest deadline first, with undated cards sinking to the bottom.
+- **Calendar tab.** A new tab aggregates every deadline across all of your boards in one place. Switch between
+  a month calendar and a scrollable list view, see overdue / due-today / upcoming counts at a glance, and click
+  any task to jump straight to its card.
+- **Native Apple Silicon build.** The `.dmg` is a genuine arm64 build — no Rosetta translation needed on
+  M1/M2/M3/M4 Macs — and a couple of unmaintained native dependencies that didn't support Apple Silicon were
+  removed so the app installs and builds cleanly on modern Macs.
 
 ## Efficiency Analysis
 
-Pomodoro Logger keeps a list of distracting app (you can config it in the setting). When it detect your using distracting apps, you lose your efficiency.
+Pomodoro Logger keeps a configurable list of "distracting" apps. Whenever one of them shows up during a focus
+session, your efficiency score for that session drops. Efficiency is calculated with
+[a simple heuristic](./src/shared/efficiency/efficiency.png) and shown as a set of dots — the larger the hole
+in a dot, the less efficient that session was.
 
-It calculates user efficiency by [a heuristic method](./src/shared/efficiency/efficiency.png).
+<p align="center">
+  <img width="150px" src="https://i.postimg.cc/Kzth8088/da.gif"/>
+</p>
 
-Demonstrating your efficiency by the dots. The larger the hole, the less efficient you are.
-
-<img width="150px" src="https://i.postimg.cc/Kzth8088/da.gif"/>
-
-You can view the record in detail by clicking the circle
+Click a dot to see that session's breakdown in detail:
 
 <p align="center">
     <img width="600px" src="https://i.postimg.cc/SKWhN9Vb/image.png"/>
-</pa>
+</p>
 
+## Data & Privacy :chart_with_upwards_trend:
 
-# Data :chart_with_upwards_trend:
+Pomodoro Logger only records activity while you're in a focus session, and only the name and title of the
+focused application — nothing about the content on screen. All data is stored and processed **locally**; none
+of it leaves your machine. You can import, export, or delete all of it at any time from Settings.
 
-Pomodoro Logger records your desktop activities when you are in a working session of Pomodoro. 
+## Download
 
-It only records your application activities, including the name and title of the focused application.
-
-You can import / export / delete all your data in the settings. 
-
-All the data is saved and processed **locally**.
-
-# Kanban Board
-
-Pomodoro Logger has integrated [Kanban Board](https://en.wikipedia.org/wiki/Kanban_board) to help you organize and estimate the time spent of your todos easily with confidence.
-
-The lists in Kanban are divided into `Todo`, `In Progress`, and `Done`. Though lists customization is possible, you are required to preserve `In Progress` list and `Done` list in order to track, estimate and analyze your project time spent. You can set the estimated time cost on each todo card. Pomodoro Logger will assist you with the corresponding actual time spent record. i.e., When you are focusing on a Kanban board, it will automatically associate your Pomodoro session with the todo cards of `In Progress` list in the Kanban, which makes further analysis possible.
-
-To make the statistics more accurate, you can keep the cards of the `In Progress` list as few as possible to precisely reflect the tasks you are focusing on.
-
-
-# What's New in This Fork
-
-- **Task deadlines.** Cards now have a "To Do Before" field. Set a deadline when creating or editing a card, and
-  it shows up as a color-coded badge (blue → amber within 24h → red once overdue). Lists automatically reorder
-  by soonest deadline first, with undated cards sinking to the bottom.
-- **Calendar tab.** A new top-level tab aggregates every deadline across all of your Kanban boards. Switch
-  between a month calendar and a scrollable list view, see overdue / due-today / upcoming counts at a glance,
-  and click any task to jump straight to its card.
-- **Native Apple Silicon build.** The macOS `.dmg` is a genuine arm64 build (no Rosetta translation needed on
-  M1/M2/M3/M4 Macs), and a couple of unmaintained native dependencies that didn't support Apple Silicon were
-  removed.
-
-
-# Download
-
-macOS (Apple Silicon)
+**macOS (Apple Silicon only).**
 
 Go to the [releases page](https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/releases/latest) and
 download the `.dmg`.
 
-> **First launch:** the app isn't notarized by Apple (that requires a paid Apple Developer Program membership),
-> so macOS Gatekeeper will say it "cannot be opened because the developer cannot be verified." Right-click the
-> app in Finder and choose **Open** (or go to **System Settings → Privacy & Security → Open Anyway**) the first
-> time you launch it. This is a one-time step.
+> **First launch:** this build isn't notarized by Apple (notarization requires a paid Apple Developer Program
+> membership), so Gatekeeper will say it "cannot be opened because the developer cannot be verified." Right-click
+> the app in Finder and choose **Open** (or go to **System Settings → Privacy & Security → Open Anyway**) the
+> first time you launch it. This is a one-time step.
 
-For Windows / Linux / Intel Mac builds, see the upstream project:
-[zxch3n/PomodoroLogger releases](https://github.com/zxch3n/PomodoroLogger/releases).
+Need Windows, Linux, or an Intel Mac build? This fork doesn't ship those — see the
+[upstream project's releases](https://github.com/zxch3n/PomodoroLogger/releases) instead.
 
+## Screenshots
 
-# Contribution
+| **Pomodoro** | **Show Countdown in Tray** |
+|:-:|:-:|
+| <img src="https://i.postimg.cc/Fs87Gx0w/choose-Focuse.gif" width="256"/> | <img src="https://i.postimg.cc/LsMhF6CT/tray.png" width="256"/> |
+| **Session Finished** | **Switch Mode** |
+| <img src="https://i.postimg.cc/fT9wWQ0g/session-Finished.gif" height="256"/> | <img src="https://i.postimg.cc/DZp202gR/switch-Mode.gif" height="256"/> |
+| **Kanban Board** | **Draggable Card** |
+| <img src="https://i.postimg.cc/rs136CfV/Kanban-Board.png" height="256"/> | <img src="https://i.postimg.cc/7Zrqft3P/moving-Around.gif" height="256"/> |
+| **Estimate Your Time Spent** | **Search Your Cards** |
+| <img src="https://i.postimg.cc/HxRzScHp/todo.png" height="256"/> | <img src="https://i.postimg.cc/CLBKZf97/search-Card.gif" height="256"/> |
+
+| **Visualization** |
+|:-:|
+| <img src="https://i.postimg.cc/CKH5hT9V/vis.png" width="512"/> |
+| <img src="https://i.postimg.cc/d150CRqH/vis1.png" width="512"/> |
+
+## Development
+
+```bash
+yarn install       # install dependencies
+yarn start         # run in dev mode (renderer + main, hot reload)
+yarn build          # production build of renderer + main
+yarn dist-mac       # build + package the arm64 .dmg with electron-builder
+yarn test           # run the Jest test suite
+yarn lint           # run tslint
+```
+
+## Contribution
 
 Found a bug or have an idea for this fork? [Open an issue here](https://github.com/Octavian-Mihai/pomodoro-kanban-calendar/issues).
 
-For the general contribution workflow, see [the Contribution Guide](./.github/CONTRIBUTION.md) from the upstream project.
+For the general contribution workflow, see [the Contribution Guide](./.github/CONTRIBUTION.md) from the
+upstream project.
 
-# Screenshot
-
-
-| **Pomodoro** |**Show Countdown in Tray**|
-|:-|:-|
-| <img src="https://i.postimg.cc/Fs87Gx0w/choose-Focuse.gif" width="256"/>|<img src="https://i.postimg.cc/LsMhF6CT/tray.png" width="256"/>|
-|**Session Finished**|**Switch Mode**|
-|<img src="https://i.postimg.cc/fT9wWQ0g/session-Finished.gif" height="256"/>|<img src="https://i.postimg.cc/DZp202gR/switch-Mode.gif" height="256"/>|
-
-| **Kanban Board**| **Draggable Card** |
-|:-| :- |
-| <img src="https://i.postimg.cc/rs136CfV/Kanban-Board.png" height="256"/>|  <img src="https://i.postimg.cc/7Zrqft3P/moving-Around.gif" height="256"/>|
-| **Estimate Your Time Spent**| **Search Your Cards**|
-| <img src="https://i.postimg.cc/HxRzScHp/todo.png" height="256"/>|  <img src="https://i.postimg.cc/CLBKZf97/search-Card.gif" height="256"/>|
-
-| **Visulization**|
-|:-|
-| <img src="https://i.postimg.cc/CKH5hT9V/vis.png" width="512"/>|
-| <img src="https://i.postimg.cc/d150CRqH/vis1.png" width="512"/>|
-  
-
-
-# License
-
+## License
 
 [GPL-3.0 License](./LICENSE)
 
