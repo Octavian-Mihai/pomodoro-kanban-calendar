@@ -1,4 +1,4 @@
-import { Button, Divider, message, Tooltip } from 'antd';
+import { Button, Divider, InputNumber, message, Tooltip } from 'antd';
 import * as remote from '@electron/remote';
 import { debounce } from 'lodash';
 import React, { Component } from 'react';
@@ -421,6 +421,24 @@ class Timer extends Component<Props, State> {
             : this.props.timer.restDuration;
     };
 
+    private getDurationSetter = () => {
+        const { isFocusing, iBreak } = this.props.timer;
+        if (isFocusing) {
+            return this.props.setFocusDuration;
+        }
+
+        return iBreak % 4 === 0 ? this.props.setLongBreakDuration : this.props.setRestDuration;
+    };
+
+    private onDurationChange = (minutes?: number | string) => {
+        const value = Math.floor(Number(minutes));
+        if (!value || value < 1) {
+            return;
+        }
+
+        this.getDurationSetter()(Math.min(value, 180) * 60);
+    };
+
     private defaultLeftTime = (isFocusing?: boolean) => {
         return `${to2digits(this.getDuration(isFocusing) / 60)}:00`;
     };
@@ -652,11 +670,11 @@ class Timer extends Component<Props, State> {
         }
 
         const eTime = this.getElapsedTimeInSecond();
-        if (eTime < 600) {
-            message.warn('Focus at least for 10 minutes to finish');
+        if (eTime <= 0) {
             return;
         }
 
+        // Sessions shorter than the full duration are logged as partial (rotten) sessions
         await this.onDone(false, true);
     };
 
@@ -708,7 +726,7 @@ class Timer extends Component<Props, State> {
                     <ReactHotkeys keyName={'f5,f6,tab'} onKeyDown={this.onKeyDown} />
                     <MiniLogger
                         clear={this.onClear}
-                        done={this.onDone}
+                        done={this.onFinishButtonClick}
                         expand={this.minimize}
                         isFocusing={isFocusing}
                         isRunning={isRunning}
@@ -826,6 +844,21 @@ class Timer extends Component<Props, State> {
                                 </ProgressTextContainer>
                             </Progress>
                         </ProgressContainer>
+
+                        {!isRunning && !targetTime ? (
+                            <div style={{ margin: '1em auto', textAlign: 'center' }}>
+                                <InputNumber
+                                    id="timer-duration-input"
+                                    min={1}
+                                    max={180}
+                                    precision={0}
+                                    value={this.getDuration() / 60}
+                                    formatter={(v) => `${v} min`}
+                                    parser={(v) => (v ? v.replace(/\s*min$/, '') : '')}
+                                    onChange={this.onDurationChange}
+                                />
+                            </div>
+                        ) : undefined}
 
                         <div style={{ margin: '2em auto', textAlign: 'center' }}>
                             <FocusSelector width={240} />
