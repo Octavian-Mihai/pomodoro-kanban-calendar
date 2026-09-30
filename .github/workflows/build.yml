@@ -17,6 +17,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16.13.2
+      - name: Install Python 3.11 (node-gyp 8 needs distutils)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
