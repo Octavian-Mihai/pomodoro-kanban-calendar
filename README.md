@@ -17,6 +17,8 @@
 <h1 align="center">Pomodoro Logger :clock930:</h1>
 <p align="center"><b>Invest your time easily.</b></p>
 
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for an architecture diagram.
+
 > This is a fork of [zxch3n/PomodoroLogger](https://github.com/zxch3n/PomodoroLogger), built for **macOS on
 > Apple Silicon**, with task deadlines and a cross-board task calendar added on top. See
 > [What's New in This Fork](#whats-new-in-this-fork) for details.
