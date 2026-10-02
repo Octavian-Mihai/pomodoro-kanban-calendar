@@ -17,8 +17,6 @@
 <h1 align="center">Pomodoro Logger :clock930:</h1>
 <p align="center"><b>Invest your time easily.</b></p>
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for an architecture diagram.
-
 > This is a fork of [zxch3n/PomodoroLogger](https://github.com/zxch3n/PomodoroLogger), built for **macOS on
 > Apple Silicon**, with task deadlines and a cross-board task calendar added on top. See
 > [What's New in This Fork](#whats-new-in-this-fork) for details.
@@ -37,6 +35,48 @@ machine.
 - Get an efficiency score for each session based on how much you got distracted
 
 <br clear="right"/>
+
+
+## Architecture
+
+```mermaid
+flowchart TD
+    subgraph Main["Main process — src/main"]
+        MainTS[main.ts / init.ts]
+        IPC[ipc/]
+        AW[activeWin.ts<br/>foreground app tracking]
+        DB[db.ts + io/<br/>NeDB read/write]
+        UPD[AutoUpdater]
+        Learner[learner/appKnn.ts]
+        Wk[worker/ fork.ts · dataHandlers]
+    end
+
+    subgraph Renderer["Renderer — src/renderer (React + Redux)"]
+        App[app.tsx / Application]
+        Store[store · reducers]
+        Comp[components<br/>Timer · Kanban · Calendar · Visualization]
+        Mon[monitor/<br/>UsageRecorder · sessionManager · screenshot]
+        WW["workers/<br/>DB · tokenizer · KNN"]
+    end
+
+    Shared[shared/<br/>efficiency · dataMerger]
+    Files[(Local NeDB files<br/>projects · session · settings)]
+
+    Comp --> Store
+    App --> Comp
+    Mon --> Store
+    Renderer <-->|IPC| IPC
+    MainTS --> IPC
+    AW --> IPC
+    IPC --> DB --> Files
+    WW --> DB
+    Learner --> Wk
+    Renderer --> Shared
+    Main --> Shared
+    UPD -->|GitHub Releases| GH[(GitHub)]
+```
+
+More detail: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 ## Table of Contents
 
